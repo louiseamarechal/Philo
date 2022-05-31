@@ -1,22 +1,4 @@
-#include <pthread.h>
-#include <stdlib.h>
-#include <stdio.h>
-
-#define NB_OF_PHILOSOPHERS 3
-
-typedef struct s_philosopher {
-	int	philosopher;
-	int	fork;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	number_of_times_each_philosopher_must_eat;
-} t_philosopher;
-
-typedef struct mutex_data {
-	t_list	*philosophers;
-	pthread_mutex_t	mutex;
-} mutex_data;
+#include "philosopher.h"
 
 void	*print_thread(void *arg)
 {

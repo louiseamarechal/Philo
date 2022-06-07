@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:15:38 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/07 08:48:31 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/07 13:26:22 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,14 @@
 
 int	main(int argc, char **argv)
 {
-	printf("%d\n", argc);
-	printf("%s\n", argv[5]);
+	t_args	args;
+
+	if (argc != 5 || argc != 6)
+	{
+		printf("Wrong number of arguments !");
+		return (1);
+	}
+	initialize(&args);
 //		----------------------PARSER---------------
 //		1. verifier que je n'ai pas trop d'arguments
 //		2. verifier si il y a 'number_of_times_each_philosopher_must_eat'
@@ -35,9 +41,7 @@ int	main(int argc, char **argv)
 //			 -> philosophers impaires prennent la fourchette de gauche first
 //				 si l'une des deux n'est pas dispo il ne peut pas manger
 //
-//		 2. si le philosophe peut manger il mange sinon il continue de penser
-//			 -> si un philo n'a pas commence a manger time_to_die millisec apres le debut de son precedent repas ou du debut de la similuation il meurt
-//			 -> il finit de manger time_to_eat millisec apres le debut de son repas
+//
 //
 //		 SLEEP
 //		 Quand le philosopher a fini de manger il se met a dormir

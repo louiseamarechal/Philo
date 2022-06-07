@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:38:04 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/06 17:34:20 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/07 09:48:10 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,28 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define NB_OF_PHILOSOPHERS 3
+typedef struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+}	t_list;
 
 typedef struct s_philosopher {
-	int	philosopher_nb;
-	int	fork_nb;
+	int			id;
+	int			lfork_id;
+	int			rfork_id;
+	long long	last_meal;
 } t_philosopher;
 
 typedef struct s_args {
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	number_of_times_each_philosopher_must_eat;
+	int				nb_philosophers;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				number_must_eat;
+	int				died;
+	int				all_ate;
+	t_philosopher	*philosophers;
 } t_args;
 
 typedef struct mutex_data {

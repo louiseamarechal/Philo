@@ -6,10 +6,12 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:38:04 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/07 13:25:25 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/07 17:06:03 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+#include <sys/time.h>
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -38,12 +40,25 @@ typedef struct s_args {
 	int				number_must_eat;
 	int				died;
 	int				all_ate; // pour checker si tous les philo ont manger (args optionnel)
+	long long int	first_timestamp;
 	t_philosopher	philosophers[200];
+	pthread_mutex_t	prompt;
 	pthread_mutex_t	forks[200]; // une fourchette par philo
 } t_args;
 
+// src
+int	initialize(t_args *args, char **argv, int argc);
+int	executor(t_args *args);
+
+// utils
+int		ft_atoi(const char *str);
+int		ft_strcmp(const char *s1, const char *s2);
+void	sleep_state(t_args *args, long long time_to);
+void	print_state(t_args *args, int philo_id, char *state);
+long long int	timestamp(void);
+
 // typedef struct s_mutex_data {
-// 	t_list	*philosophers;
-// 	t_args	arguments;
-// 	pthread_mutex_t	mutex;
-// } t_mutex_data;
+	// 	t_list	*philosophers;
+	// 	t_args	arguments;
+	// 	pthread_mutex_t	mutex;
+	// } t_mutex_data;

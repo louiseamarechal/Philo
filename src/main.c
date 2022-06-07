@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:15:38 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/07 13:26:22 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/07 17:32:18 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,37 @@
 
 int	main(int argc, char **argv)
 {
-	t_args	args;
+	t_args			args;
 
-	if (argc != 5 || argc != 6)
+	if (argc != 5 && argc != 6)
 	{
 		printf("Wrong number of arguments !");
 		return (1);
 	}
-	initialize(&args);
+	initialize(&args, argv, argc);
+	executor(&args);
+
+	t_philosopher *philo;
+
+	philo = args.philosophers;
+	printf("%d\n", philo->args->nb_philo);
+	// printf("nb philo = %d\n", args.nb_philo);
+	// printf("t_die = %d\n", args.t_die);
+	// printf("t_eat = %d\n", args.t_eat);
+	// printf("t_sleep = %d\n", args.t_sleep);
+	// printf("number_must_eat = %d\n", args.number_must_eat);
+	// printf("died = %d\n", args.died);
+	// printf("all_ate = %d\n", args.all_ate);
+	//
+	// int i = 1;
+	// while (i <= ft_atoi(argv[1]))
+	// {
+	// 	printf("philosopher_id = %d\n", philosophers[i].id);
+	// 	printf("philosophers->nb_meal = %d\n", philosophers[i].nb_meal);
+	// 	printf("philosophers->right_fork = %d\n", philosophers[i].right_fork);
+	// 	printf("philosophers->left_fork = %d\n", philosophers[i].left_fork);
+	// 	i++;
+	// }
 //		----------------------PARSER---------------
 //		1. verifier que je n'ai pas trop d'arguments
 //		2. verifier si il y a 'number_of_times_each_philosopher_must_eat'

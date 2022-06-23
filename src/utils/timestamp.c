@@ -15,17 +15,17 @@ long long int	timestamp(void)
 	struct timeval	t;
 
 	gettimeofday(&t, NULL);
-	return (t.tv_sec * 1000 + t.tv_sec / 1000);
+	return ((t.tv_sec * 1000) + (t.tv_sec / 1000));
 }
 
-void	sleep_state(t_args *args, long long time_to)
+void	sleep_state(t_args *args, long long received_time)
 {
 	long long i;
 
 	i = timestamp();
 	while (!(args->died))
 	{
-		if (diff_time_in_msec(i, timestamp()) >= time_to)
+		if (diff_time_in_msec(i, timestamp()) >= received_time)
 			break ;
 		usleep(50);
 	}
@@ -34,9 +34,12 @@ void	sleep_state(t_args *args, long long time_to)
 void	print_state(t_args *args, int philo_id, char *state)
 {
 	(void)args;
+	long long i;
+
+	i = timestamp();
 	// pthread_mutex_lock(&prompt);
 	// if (args->died != 1)
-		printf("%lld %d %s\n", timestamp(), philo_id, state);
+		printf("%lld %d %s\n", diff_time_in_msec(i, timestamp()), philo_id, state);
 	// pthread_mutex_unlock(&prompt);
 }
 

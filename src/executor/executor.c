@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:32:49 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/07 17:36:54 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/23 12:16:10 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	*print_thread(void *philo)
 		// printf("%lld\n", timestamp());
 		// printf("%lld %d %s\n", timestamp(), philosopher->id, "is thinking");
 		print_state(args, philosopher->id, "is sleeping");
-		printf("%d\n", args.t_sleep);
+		// printf("%d\n", args->t_sleep);
 		// sleep_state(args, args->t_sleep);
 		// print_state(args, philosopher->id, "is thinking");
 	// }

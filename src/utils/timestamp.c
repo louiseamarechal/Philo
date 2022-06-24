@@ -12,10 +12,14 @@ static long long int	diff_time_in_msec(long long int t1, long long int t2)
 
 long long int	timestamp(void)
 {
-	struct timeval	t;
+	struct timeval	time;
+	long long int	timeofday;
 
-	gettimeofday(&t, NULL);
-	return ((t.tv_sec * 1000) + (t.tv_sec / 1000));
+	timeofday = 0;
+	gettimeofday(&time, NULL);
+	timeofday += time.tv_sec * 1000;
+	timeofday += time.tv_sec / 1000;
+	return (timeofday);
 }
 
 void	sleep_state(t_args *args, long long received_time)
@@ -33,14 +37,13 @@ void	sleep_state(t_args *args, long long received_time)
 
 void	print_state(t_args *args, int philo_id, char *state)
 {
-	(void)args;
 	long long i;
 
 	i = timestamp();
-	// pthread_mutex_lock(&prompt);
-	// if (args->died != 1)
-		printf("%lld %d %s\n", diff_time_in_msec(i, timestamp()), philo_id, state);
-	// pthread_mutex_unlock(&prompt);
+	// pthread_mutex_lock(&args->prompt);
+	if (args->died != 1)
+		printf("%lld %d %s\n", i - args->first_timestamp, philo_id, state);
+	// pthread_mutex_unlock(&args->prompt);
 }
 
 // int	main(void)

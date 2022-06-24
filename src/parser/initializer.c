@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 08:43:37 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/07 17:32:40 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/24 10:01:32 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ static int	initialize_philo(t_args *args, t_philosopher *philo)
 		else
 			philo[i].left_fork = i + 1;
 		philo[i].started_meal = 0;
+		philo[i].args = args;
 		i++;
 	}
-	philo->args = args;
 	return (1);
 }
 
@@ -64,6 +64,7 @@ int	initialize(t_args *args, char **argv, int argc)
 		return (0); // erreur
 	args->died = 0;
 	args->all_ate = 0;
+	args->first_timestamp = timestamp();
 	initialize_philo(args, args->philosophers);
 	intitialize_mutex(args);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:38:04 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/24 09:10:56 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/24 12:13:57 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_args {
 	int				all_ate; // pour checker si tous les philo ont manger (args optionnel)
 	long long int	first_timestamp;
 	t_philosopher	philosophers[200];
-	pthread_mutex_t	prompt;
+	pthread_mutex_t	print_philo_state;
 	pthread_mutex_t	forks[200]; // une fourchette par philo
 } t_args;
 
@@ -53,7 +53,7 @@ int	executor(t_args *args);
 // utils
 int		ft_atoi(const char *str);
 int		ft_strcmp(const char *s1, const char *s2);
-void	sleep_state(t_args *args, long long time_to);
+void	sleep_mode(t_args *args, long long time_to);
 void	print_state(t_args *args, int philo_id, char *state);
 long long int	timestamp(void);
 

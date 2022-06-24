@@ -18,11 +18,11 @@ long long int	timestamp(void)
 	timeofday = 0;
 	gettimeofday(&time, NULL);
 	timeofday += time.tv_sec * 1000;
-	timeofday += time.tv_sec / 1000;
+	timeofday += time.tv_usec / 1000;
 	return (timeofday);
 }
 
-void	sleep_state(t_args *args, long long received_time)
+void	sleep_mode(t_args *args, long long received_time)
 {
 	long long i;
 
@@ -44,10 +44,10 @@ void	print_state(t_args *args, int philo_id, char *state)
 	long long i;
 
 	i = timestamp();
-	// pthread_mutex_lock(&args->prompt);
+	pthread_mutex_lock(&args->print_philo_state);
 	if (args->died != 1)
 		printf("%lld %d %s\n", i - args->first_timestamp, philo_id, state);
-	// pthread_mutex_unlock(&args->prompt);
+	pthread_mutex_unlock(&args->print_philo_state);
 }
 
 // int	main(void)

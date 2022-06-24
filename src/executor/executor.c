@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:32:49 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/24 09:45:02 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/24 12:17:18 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,18 @@ void	philosopher_eats(t_args *args, int id)
 	args->philosophers[id].started_meal = timestamp();
 	// 			-> je unlock le meal
 	// 			-> je sleep le temps de t_eat
-	sleep_state(args, args->t_eat);
+	sleep_mode(args, args->t_eat);
 	// 			-> j'augmente nb_meal pour notifier que mon philosophers a deja mange au moins une fois
 	args->philosophers[id].nb_meal += 1;
 	// 			-> je unlock mes deux fourchettes
 	pthread_mutex_unlock(&args->forks[args->philosophers[id].right_fork]);
 	pthread_mutex_unlock(&args->forks[args->philosophers[id].left_fork]);
+	printf("philo %d ate %d times\n", id, args->philosophers[id].nb_meal);
 	// //	- sinon il continue de penser
 	// //		-> si un philo n'a pas commence a manger time_to_die millisec apres le debut de son precedent repas ou du debut de la similuation il meurt
 	// //		-> il finit de manger time_to_eat millisec apres le debut de son repas
 }
+
 
 static void	*print_thread(void *philo)
 {
@@ -56,24 +58,39 @@ static void	*print_thread(void *philo)
 	while (args->died != 1)
 	{
 		philosopher_eats(args, philosopher->id);
+		// 3. si all_ate == true -> je break
 		if (args->all_ate == 1)
+		{
+			printf("diner is over, we all ate !!!!!!!!");
 			break ;
-		// printf("%lld\n", timestamp());
-		// printf("%lld %d %s\n", timestamp(), philosopher->id, "is thinking");
+		}
+		// 4. Philo commence a dormir pour t_sleep
+		// 5. je print le timestamp + etat sleep
 		print_state(args, philosopher->id, "is sleeping");
-		// printf("%d\n", args->t_sleep);
-		sleep_state(args, args->t_sleep);
+		sleep_mode(args, args->t_sleep);
+		// 6. le philosophe THINK
+		// 7. print le timestamp et son etat
 		print_state(args, philosopher->id, "is thinking");
 	}
-	// 1. si philo_id %2 -> fonction eat_even
-	// 2. si philo non %2 -> fonction eat_odd
-	//		fonction va print le timestamp fourchette + lunch
-	// 3. si all_ate == true -> je break
-	// 4. Philo commence a dormir pour t_sleep
-	// 5. je print le timestamp + etat sleep
-	// 6. le philosophe THINK
-	// 7. print le timestamp et son etat
 	return (NULL);
+}
+
+void	diner_is_over(t_args *args)
+{
+	int	i;
+	int	max_meals;
+
+	i = 1;
+	max_meals = 0;
+	while (i <= args->nb_philo)
+	{
+		if (args->philosophers[i].nb_meal == args->number_must_eat)
+			max_meals++;
+		i++;
+	}
+	printf("max meals = %d\n", max_meals);
+	if (max_meals == args->nb_philo)
+		args->all_ate = 1;
 }
 
 int	executor(t_args *args)
@@ -95,6 +112,7 @@ int	executor(t_args *args)
 		pthread_join(philo[i].thread_id, NULL);
 		i++;
 	}
+	diner_is_over(args);
 	// philo_death_checker();
 	// destroy_all();
 	return (1);

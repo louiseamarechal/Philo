@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:15:38 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/24 09:08:14 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/24 15:48:43 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv)
 	executor(&args);
 
 	// t_philosopher	*philo;
-	//
+
 	// philo = args.philosophers;
 	// printf("nb_philo = %d\n", philo.args->nb_philo);
 	// printf("nb_philo = %d\n", args.nb_philo);

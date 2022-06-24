@@ -6,7 +6,7 @@
 #    By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 15:24:06 by lmarecha          #+#    #+#              #
-#    Updated: 2022/06/07 16:39:29 by lmarecha         ###   ########.fr        #
+#    Updated: 2022/06/24 12:22:22 by lmarecha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,7 @@ $(NAME): $(OBJ) $(HEADER)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(INCLUDES)
 
 clean:
-	/bin/rm -f *.o
+	/bin/rm -f $(OBJ)
 
 fclean: clean
 	/bin/rm -f $(NAME)

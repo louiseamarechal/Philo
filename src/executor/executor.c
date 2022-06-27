@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:32:49 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/24 12:17:18 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/27 09:19:36 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,24 @@ void	diner_is_over(t_args *args)
 int	executor(t_args *args)
 {
 	int				i;
+	int				max_meals;
 	t_philosopher	*philo;
 
 	i = 1;
+	max_meals = 0;
 	philo = args->philosophers;
 	while (i <= args->nb_philo)
 	{
 		if (pthread_create(&(philo[i].thread_id), NULL, print_thread, &(philo[i])) != 0)
 			return (0);
+		if (philo[i].nb_meal == args->number_must_eat)
+			max_meals++;
+		printf("------------------------philo[%d].nb_meal = %d\n", i, philo[i].nb_meal);
+		printf("------------------------max_meals = %d\n", max_meals);
+		printf("------------------------args->number_must_eat = %d\n", args->number_must_eat);
+		printf("------------------------args->nb_philo = %d\n", args->nb_philo);
+		if (max_meals == args->nb_philo)
+			args->all_ate = 1;
 		i++;
 	}
 	i = 0;
@@ -112,7 +122,12 @@ int	executor(t_args *args)
 		pthread_join(philo[i].thread_id, NULL);
 		i++;
 	}
-	diner_is_over(args);
+	while (i != 0)
+	{
+		pthread_mutex_destroy(&args->forks[philo[i].right_fork]);
+		i--;
+	}
+	// diner_is_over(args);
 	// philo_death_checker();
 	// destroy_all();
 	return (1);

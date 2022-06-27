@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:38:04 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/27 11:13:19 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/27 12:31:38 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ int		ft_strcmp(const char *s1, const char *s2);
 void	sleep_mode(t_args *args, long long time_to);
 void	print_state(t_args *args, int philo_id, char *state);
 long long int	timestamp(void);
+
+// timestamp
+long long int	diff_time_in_msec(long long int t1, long long int t2);
 
 // typedef struct s_mutex_data {
 	// 	t_list	*philosophers;

@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 08:43:37 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/27 08:46:41 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/27 11:13:46 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static int	intitialize_mutex(t_args *args)
 		i++;
 	}
 	if (pthread_mutex_init(&args->print_philo_state, NULL) != 0)
+		return (0);
+	if (pthread_mutex_init(&args->meal_state, NULL) != 0)
 		return (0);
 	return (1);
 }

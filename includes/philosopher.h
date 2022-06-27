@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:38:04 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/24 12:13:57 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/27 11:13:19 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef struct s_list
 {
@@ -43,6 +44,7 @@ typedef struct s_args {
 	long long int	first_timestamp;
 	t_philosopher	philosophers[200];
 	pthread_mutex_t	print_philo_state;
+	pthread_mutex_t	meal_state;
 	pthread_mutex_t	forks[200]; // une fourchette par philo
 } t_args;
 

@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:32:49 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/27 13:59:28 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/27 18:27:23 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,43 +32,47 @@ void	philosopher_eats(t_args *args, int id)
 	pthread_mutex_lock(&args->meal_state);
 	args->philosophers[id].started_meal = timestamp();
 	args->philosophers[id].nb_meal += 1;
-	sleep_mode(args, args->t_eat);
 	pthread_mutex_unlock(&args->meal_state);
+	sleep_mode(args, args->t_eat);
 	pthread_mutex_unlock(&args->forks[args->philosophers[id].right_fork]);
 	pthread_mutex_unlock(&args->forks[args->philosophers[id].left_fork]);
-	pthread_mutex_lock(&args->print_philo_state);
-	printf("\033[0;33mphilo %d ate %d times \033[0m\n", id, args->philosophers[id].nb_meal);
-	pthread_mutex_unlock(&args->print_philo_state);
+	// pthread_mutex_lock(&args->print_philo_state);
+	// printf("\033[0;33mphilo %d ate %d times \033[0m\n", id, args->philosophers[id].nb_meal);
+	// pthread_mutex_unlock(&args->print_philo_state);
 }
 
 
 void	is_anyone_dead_or_full(t_args *args, int id)
 {
 //-> si un philo n'a pas commence a manger time_to_die millisec apres le debut de son precedent repas ou du debut de la similuation il meurt
-	// pthread_mutex_lock(&args->print_philo_state);
-	// printf("t_die = %d\n", args->t_die);
-	// printf("philo[%d] timestamp = %lld\n", id, timestamp());
-	// printf("first timestamp = %lld\n", args->first_timestamp);
-	// printf("philo[%d].started_meal = %lld\n", id, args->philosophers[id].started_meal);
-	// printf("timestamp - started_meal = %lld\n", diff_time_in_msec(args->philosophers[id].started_meal, timestamp()));
-	// // printf("started_meal - first_timestamp = %lld\n", diff_time_in_msec(args->first_timestamp, args->philosophers[id].started_meal));
-	// pthread_mutex_unlock(&args->print_philo_state);
+	pthread_mutex_lock(&args->print_philo_state);
+	printf("t_die = %d\n", args->t_die);
+	printf("philo[%d] timestamp = %lld\n", id, timestamp());
+	printf("first timestamp = %lld\n", args->first_timestamp);
+	printf("philo[%d].started_meal = %lld\n", id, args->philosophers[id].started_meal);
+	printf("timestamp - started_meal = %lld\n", diff_time_in_msec(args->philosophers[id].started_meal, timestamp()));
+	// printf("started_meal - first_timestamp = %lld\n", diff_time_in_msec(args->first_timestamp, args->philosophers[id].started_meal));
+	pthread_mutex_unlock(&args->print_philo_state);
 	if (args->number_must_eat != -1 && args->philosophers[id].nb_meal == args->number_must_eat)
-		args->all_ate += 1;
-	//pb ici ?
-	if (args->all_ate != args->nb_philo && args->philosophers[id].nb_meal < args->number_must_eat)
 	{
-		if (diff_time_in_msec(args->philosophers[id].started_meal, timestamp()) > args->t_die)
-		{
-			print_state(args, id, "died waited too long since last meal");
-			args->died = 1;
-		}
-		if (args->philosophers[id].nb_meal == 1 && diff_time_in_msec(args->first_timestamp, args->philosophers[id].started_meal) > args->t_die)
-		{
-			print_state(args, id, "died haven't eaten since begining");
-			args->died = 1;
-		}
+		pthread_mutex_lock(&args->meal_state);
+		args->all_ate += 1;
+		pthread_mutex_unlock(&args->meal_state);
 	}
+	//pb ici ?
+	// if (args->number_must_eat != -1 && args->philosophers[id].nb_meal < args->number_must_eat)
+	// {
+	if (diff_time_in_msec(args->philosophers[id].started_meal, timestamp()) > args->t_die)
+	{
+		print_state(args, id, "died waited too long since last meal");
+		args->died = 1;
+	}
+	if (args->philosophers[id].nb_meal == 1 && diff_time_in_msec(args->first_timestamp, args->philosophers[id].started_meal) > args->t_die)
+	{
+		print_state(args, id, "died haven't eaten since begining");
+		args->died = 1;
+	}
+	// }
 }
 
 static void	*print_thread(void *philo)
@@ -78,12 +82,12 @@ static void	*print_thread(void *philo)
 
 	philosopher = (t_philosopher *)philo;
 	args = philosopher->args;
-	while (args->died != 1 || args->all_ate == args->nb_philo)
+	while (args->died != 1 && philosopher->nb_meal != args->number_must_eat)
 	{
 		philosopher_eats(args, philosopher->id);
 		is_anyone_dead_or_full(args, philosopher->id);
-		if (args->all_ate >= args->nb_philo)
-			break ;
+		// if (args->all_ate >= args->nb_philo)
+		// 	break ;
 		print_state(args, philosopher->id, "is sleeping");
 		sleep_mode(args, args->t_sleep);
 		print_state(args, philosopher->id, "is thinking");

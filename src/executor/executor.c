@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:32:49 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/27 13:57:56 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/27 13:59:28 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	is_anyone_dead_or_full(t_args *args, int id)
 	// pthread_mutex_unlock(&args->print_philo_state);
 	if (args->number_must_eat != -1 && args->philosophers[id].nb_meal == args->number_must_eat)
 		args->all_ate += 1;
+	//pb ici ?
 	if (args->all_ate != args->nb_philo && args->philosophers[id].nb_meal < args->number_must_eat)
 	{
 		if (diff_time_in_msec(args->philosophers[id].started_meal, timestamp()) > args->t_die)

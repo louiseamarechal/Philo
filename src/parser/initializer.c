@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 08:43:37 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/27 11:13:46 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/28 10:17:28 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	initialize_philo(t_args *args, t_philosopher *philo)
 			philo[i].left_fork = (i + 1) % args->nb_philo; // pour que le dernier philo prenne la fourchette du premier
 		else
 			philo[i].left_fork = i + 1;
-		philo[i].started_meal = 0;
+		philo[i].started_meal = args->first_timestamp;
 		philo[i].args = args;
 		i++;
 	}
@@ -53,8 +53,6 @@ static int	initialize_philo(t_args *args, t_philosopher *philo)
 int	initialize(t_args *args, char **argv, int argc)
 {
 	args->nb_philo = ft_atoi(argv[1]);
-	if (args->nb_philo < 2 || args->nb_philo > 200) // check le nb de philosophers
-		return (0); //erreur
 	args->t_die = ft_atoi(argv[2]);
 	args->t_eat = ft_atoi(argv[3]);
 	args->t_sleep = ft_atoi(argv[4]);
@@ -69,5 +67,7 @@ int	initialize(t_args *args, char **argv, int argc)
 	args->first_timestamp = timestamp();
 	initialize_philo(args, args->philosophers);
 	intitialize_mutex(args);
+	if (args->nb_philo < 2 || args->nb_philo > 200) // check le nb de philosophers
+		return (0); //erreur
 	return (1);
 }

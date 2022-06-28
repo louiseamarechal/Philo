@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:38:04 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/28 15:10:02 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/28 15:29:44 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,17 @@ typedef struct s_args {
 } t_args;
 
 // src
-int	initialize(t_args *args, char **argv, int argc);
-int	executor(t_args *args);
+int				initialize(t_args *args, char **argv, int argc);
+int				executor(t_args *args);
 
 // utils
-int		ft_atoi(const char *str);
-int		ft_strcmp(const char *s1, const char *s2);
-void	sleep_mode(t_args *args, long long time_to);
-void	print_state(t_args *args, int philo_id, char *state);
-long long int	timestamp(void);
-
-// timestamp
-long long int	diff_time_in_msec(long long int t1, long long int t2);
+int				ft_atoi(const char *str);
+int				ft_strcmp(const char *s1, const char *s2);
+void			kill_everything(t_args *args);
 int				is_dead(t_args *args);
 
-// typedef struct s_mutex_data {
-	// 	t_list	*philosophers;
-	// 	t_args	arguments;
-	// 	pthread_mutex_t	mutex;
-	// } t_mutex_data;
+// timestamp
+long long int	timestamp(void);
+void			sleep_mode(t_args *args, long long time_to);
+void			print_state(t_args *args, int philo_id, char *state);
+long long int	diff_time_in_msec(long long int t1, long long int t2);

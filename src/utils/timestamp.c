@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:09:00 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/28 15:09:26 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/28 15:28:41 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,6 @@ long long int	timestamp(void)
 	timeofday += time.tv_sec * 1000;
 	timeofday += time.tv_usec / 1000;
 	return (timeofday);
-}
-
-int	is_dead(t_args *args)
-{
-	int	ret;
-
-	pthread_mutex_lock(&args->meal_state);
-	if (args->died != 1)
-		ret = 0;
-	else
-		ret = 1;
-	pthread_mutex_unlock(&args->meal_state);
-	return (ret);
 }
 
 void	sleep_mode(t_args *args, long long received_time)

@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 08:43:37 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/28 10:17:28 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/28 15:06:34 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	intitialize_mutex(t_args *args)
 	int	i;
 
 	i = 0;
-	while (i >= args->nb_philo)
+	while (i < args->nb_philo)
 	{
 		if (pthread_mutex_init(&args->forks[i], NULL) != 0)
 			return (0);
@@ -34,15 +34,12 @@ static int	initialize_philo(t_args *args, t_philosopher *philo)
 {
 	int	i;
 
-	i = 1;
-	while (i <= args->nb_philo)
+	i = 0;
+	while (i < args->nb_philo)
 	{
 		philo[i].id = i;
+		philo[i].left_fork = (i + 1) % args->nb_philo;
 		philo[i].right_fork = i;
-		if (i == args->nb_philo)
-			philo[i].left_fork = (i + 1) % args->nb_philo; // pour que le dernier philo prenne la fourchette du premier
-		else
-			philo[i].left_fork = i + 1;
 		philo[i].started_meal = args->first_timestamp;
 		philo[i].args = args;
 		i++;
@@ -67,7 +64,5 @@ int	initialize(t_args *args, char **argv, int argc)
 	args->first_timestamp = timestamp();
 	initialize_philo(args, args->philosophers);
 	intitialize_mutex(args);
-	if (args->nb_philo < 2 || args->nb_philo > 200) // check le nb de philosophers
-		return (0); //erreur
 	return (1);
 }

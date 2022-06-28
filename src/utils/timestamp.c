@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   timestamp.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/28 15:09:00 by lmarecha          #+#    #+#             */
+/*   Updated: 2022/06/28 15:09:26 by lmarecha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philosopher.h"
 
 long long int	diff_time_in_msec(long long int t1, long long int t2)
@@ -17,12 +29,25 @@ long long int	timestamp(void)
 	return (timeofday);
 }
 
+int	is_dead(t_args *args)
+{
+	int	ret;
+
+	pthread_mutex_lock(&args->meal_state);
+	if (args->died != 1)
+		ret = 0;
+	else
+		ret = 1;
+	pthread_mutex_unlock(&args->meal_state);
+	return (ret);
+}
+
 void	sleep_mode(t_args *args, long long received_time)
 {
 	long long i;
 
 	i = timestamp();
-	while (args->died != 1)
+	while (is_dead(args) == 0)
 	{
 		if (diff_time_in_msec(i, timestamp()) >= received_time)
 			break ;
@@ -37,7 +62,7 @@ void	print_state(t_args *args, int philo_id, char *state)
 	i = timestamp();
 	pthread_mutex_lock(&args->print_philo_state);
 	if (args->died != 1)
-		printf("%lld %d %s\n", i - args->first_timestamp, philo_id, state);
+		printf("%lld %d %s\n", i - args->first_timestamp, philo_id + 1, state);
 	pthread_mutex_unlock(&args->print_philo_state);
 }
 

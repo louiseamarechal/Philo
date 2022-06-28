@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 14:30:21 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/07 16:35:48 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/28 11:50:59 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,18 @@ int	ft_strcmp(const char *s1, const char *s2)
 	while (s1[cpt] && s1[cpt] == s2[cpt])
 		cpt++;
 	return ((unsigned char)s1[cpt] - (unsigned char)s2[cpt]);
+}
+
+void	kill_everything(t_args *args)
+{
+	int	i;
+
+	i = 1;
+	while (i <= args->nb_philo)
+	{
+		pthread_mutex_destroy(&args->forks[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&args->print_philo_state);
+	pthread_mutex_destroy(&args->meal_state);
 }

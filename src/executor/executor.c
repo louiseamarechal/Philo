@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor2.c                                        :+:      :+:    :+:   */
+/*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:32:49 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/28 15:03:28 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/28 15:51:01 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ int	executor(t_args *args)
 	philo = args->philosophers;
 	while (i < args->nb_philo)
 	{
-		printf("Create thread %d\n", i);
 		if (pthread_create(&(philo[i].thread_id), NULL, print_thread, &(philo[i])) != 0)
 			return (0);
 		i++;

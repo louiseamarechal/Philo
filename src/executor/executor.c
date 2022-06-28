@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:32:49 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/28 15:51:01 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/28 16:20:24 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	*print_thread(void *philo)
 	args = philosopher->args;
 	if (philosopher->id % 2 == 0)
 		usleep(100);
-	while (args->died != 1 && args->all_ate != 1)
+	while (is_dead(args) == 0 && args->all_ate != 1)
 	{
 		philosopher_eats(args, philosopher->id);
 		print_state(args, philosopher->id, "is sleeping");
@@ -69,7 +69,7 @@ void	is_anyone_dead_or_full(t_args *args, t_philosopher *philo)
 	while (args->all_ate != 1)
 	{
 		i = 0;
-		while (args->died != 1 && i < args->nb_philo)
+		while (is_dead(args) == 0 && i < args->nb_philo)
 		{
 			pthread_mutex_lock(&args->meal_state);
 			if (diff_time_in_msec(philo[i].started_meal, timestamp()) > args->t_die)
@@ -83,12 +83,12 @@ void	is_anyone_dead_or_full(t_args *args, t_philosopher *philo)
 		if (args->died == 1)
 			break;
 		i = 0;
-		pthread_mutex_lock(&args->meal_state);
+		// pthread_mutex_lock(&args->meal_state);
 		while (args->number_must_eat != -1 && i < args->nb_philo && philo[i].nb_meal >= args->number_must_eat)
 			i++;
 		if (i == args->nb_philo)
 			args->all_ate = 1;
-		pthread_mutex_unlock(&args->meal_state);
+		// pthread_mutex_unlock(&args->meal_state);
 		usleep(1000);
 	}
 }

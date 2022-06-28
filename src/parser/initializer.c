@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 08:43:37 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/28 15:06:34 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/28 16:42:33 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int	initialize(t_args *args, char **argv, int argc)
 		args->number_must_eat = ft_atoi(argv[5]);
 	else
 		args->number_must_eat = -1;
-	if (args->number_must_eat == 0) // si aucun ne doit manger fin de simulation
-		return (0); // erreur
+	if (args->number_must_eat == 0)
+		return (0);
 	args->died = 0;
 	args->all_ate = 0;
 	args->first_timestamp = timestamp();

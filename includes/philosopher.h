@@ -6,16 +6,19 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:38:04 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/28 16:24:50 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/28 16:48:11 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <sys/time.h>
-#include <pthread.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#ifndef PHILOSOPHER_H
+# define PHILOSOPHER_H
+
+# include <unistd.h>
+# include <sys/time.h>
+# include <pthread.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <string.h>
 
 typedef struct s_list
 {
@@ -25,13 +28,13 @@ typedef struct s_list
 
 typedef struct s_philosopher {
 	int				id;
-	int				nb_meal; // to keep track of the nb of meal of a philo (args optionnel)
+	int				nb_meal;
 	int				left_fork;
 	int				right_fork;
 	struct s_args	*args;
 	long long		started_meal;
-	pthread_t		thread_id; // un thread par philo, pour executer la fonction
-} t_philosopher;
+	pthread_t		thread_id;
+}	t_philosopher;
 
 typedef struct s_args {
 	int				nb_philo;
@@ -40,13 +43,13 @@ typedef struct s_args {
 	int				t_sleep;
 	int				number_must_eat;
 	int				died;
-	int				all_ate; // pour checker si tous les philo ont manger (args optionnel)
+	int				all_ate;
 	long long int	first_timestamp;
 	t_philosopher	philosophers[200];
 	pthread_mutex_t	print_philo_state;
 	pthread_mutex_t	meal_state;
-	pthread_mutex_t	forks[200]; // une fourchette par philo
-} t_args;
+	pthread_mutex_t	forks[200];
+}	t_args;
 
 // src
 int				initialize(t_args *args, char **argv, int argc);
@@ -63,3 +66,4 @@ long long int	timestamp(void);
 void			sleep_mode(t_args *args, long long time_to);
 void			print_state(t_args *args, int philo_id, char *state);
 long long int	diff_time_in_msec(long long int t1, long long int t2);
+#endif

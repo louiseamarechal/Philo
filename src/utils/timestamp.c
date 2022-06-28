@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:09:00 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/28 16:25:40 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/28 16:43:13 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ long long int	timestamp(void)
 
 void	sleep_mode(t_args *args, long long received_time)
 {
-	long long i;
+	long long	i;
 
 	i = timestamp();
 	while (is_dead(args) == 0)
@@ -44,7 +44,7 @@ void	sleep_mode(t_args *args, long long received_time)
 
 void	print_state(t_args *args, int philo_id, char *state)
 {
-	long long i;
+	long long	i;
 
 	i = timestamp();
 	pthread_mutex_lock(&args->print_philo_state);

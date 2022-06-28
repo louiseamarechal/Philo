@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:32:49 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/28 16:20:24 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/28 16:41:36 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,12 @@ void	is_anyone_dead_or_full(t_args *args, t_philosopher *philo)
 		if (args->died == 1)
 			break;
 		i = 0;
-		// pthread_mutex_lock(&args->meal_state);
+		pthread_mutex_lock(&args->meal_state);
 		while (args->number_must_eat != -1 && i < args->nb_philo && philo[i].nb_meal >= args->number_must_eat)
 			i++;
 		if (i == args->nb_philo)
 			args->all_ate = 1;
-		// pthread_mutex_unlock(&args->meal_state);
+		pthread_mutex_unlock(&args->meal_state);
 		usleep(1000);
 	}
 }
@@ -115,7 +115,4 @@ int	executor(t_args *args)
 	}
 	kill_everything(args);
 	return (1);
-	// je cree les thread de chaque philosophe qui m'envoit vers la fonction qui s'execute dans le thread
-	// je check si quelu'un doit mourir
-	// je finis avec la fonction qui va join mes threads + destroy les mutex fourchettes et ecriture
 }

@@ -6,16 +6,16 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:09:00 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/28 16:43:13 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/29 14:35:29 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
 
-long long int	diff_time_in_msec(long long int t1, long long int t2)
-{
-	return (t2 - t1);
-}
+// long long int	diff_time_in_msec(long long int t1, long long int t2)
+// {
+// 	return (t2 - t1);
+// }
 
 long long int	timestamp(void)
 {
@@ -36,7 +36,7 @@ void	sleep_mode(t_args *args, long long received_time)
 	i = timestamp();
 	while (is_dead(args) == 0)
 	{
-		if (diff_time_in_msec(i, timestamp()) >= received_time)
+		if ((timestamp() - i) >= received_time)
 			break ;
 		usleep(50);
 	}

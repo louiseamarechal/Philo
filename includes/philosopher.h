@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:38:04 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/28 16:48:11 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/29 14:35:41 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,5 @@ int				is_dead(t_args *args);
 long long int	timestamp(void);
 void			sleep_mode(t_args *args, long long time_to);
 void			print_state(t_args *args, int philo_id, char *state);
-long long int	diff_time_in_msec(long long int t1, long long int t2);
+// long long int	diff_time_in_msec(long long int t1, long long int t2);
 #endif

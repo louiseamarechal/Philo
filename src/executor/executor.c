@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 12:32:49 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/28 16:41:36 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/29 18:31:52 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	*print_thread(void *philo)
 	return (NULL);
 }
 
-void	is_anyone_dead_or_full(t_args *args, t_philosopher *philo)
+int	is_anyone_dead_or_full(t_args *args, t_philosopher *philo)
 {
 	int	i;
 
@@ -72,10 +72,11 @@ void	is_anyone_dead_or_full(t_args *args, t_philosopher *philo)
 		while (is_dead(args) == 0 && i < args->nb_philo)
 		{
 			pthread_mutex_lock(&args->meal_state);
-			if (diff_time_in_msec(philo[i].started_meal, timestamp()) > args->t_die)
+			if ((timestamp() - philo[i].started_meal) > args->t_die)
 			{
 				print_state(args, i, "\033[31mdied\033[0m");
-				args->died = 1;
+				return (1);
+				// args->died = 1;
 			}
 			pthread_mutex_unlock(&args->meal_state);
 			i++;
@@ -87,10 +88,12 @@ void	is_anyone_dead_or_full(t_args *args, t_philosopher *philo)
 		while (args->number_must_eat != -1 && i < args->nb_philo && philo[i].nb_meal >= args->number_must_eat)
 			i++;
 		if (i == args->nb_philo)
-			args->all_ate = 1;
+			return (2);
+			// args->all_ate = 1;
 		pthread_mutex_unlock(&args->meal_state);
 		usleep(1000);
 	}
+	return (0);
 }
 
 int	executor(t_args *args)
@@ -106,7 +109,10 @@ int	executor(t_args *args)
 			return (0);
 		i++;
 	}
-	is_anyone_dead_or_full(args, philo);
+	if (is_anyone_dead_or_full(args, philo) == 1)
+		args->died = 1;
+	if (is_anyone_dead_or_full(args, philo) == 2)
+		args->all_ate = 1;
 	i = 0;
 	while (i < args->nb_philo)
 	{

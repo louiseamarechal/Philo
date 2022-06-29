@@ -6,7 +6,7 @@
 #    By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 15:24:06 by lmarecha          #+#    #+#              #
-#    Updated: 2022/06/28 16:28:45 by lmarecha         ###   ########.fr        #
+#    Updated: 2022/06/29 18:08:26 by lmarecha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@
 NAME = philo
 
 CC = clang
-CFLAGS = -Wall -Werror -Wextra -pthread #-g3 -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -pthread -g3 #-fsanitize=address
 INCLUDES = -I includes
 
 #------------------------------------#

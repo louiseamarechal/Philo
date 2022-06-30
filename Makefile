@@ -6,7 +6,7 @@
 #    By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 15:24:06 by lmarecha          #+#    #+#              #
-#    Updated: 2022/06/29 18:08:26 by lmarecha         ###   ########.fr        #
+#    Updated: 2022/06/30 15:04:55 by lmarecha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ SRCEXECUTOR	=	executor.c
 SRCPARSER	=	initializer.c
 
 SRCUTILS	=	philo_utils.c \
-				timestamp.c
+				time_manager.c
 
 SRC 		=	$(addprefix $(SRCDIR), $(SRCMAIN)) \
 				$(addprefix $(SRCDIR)executor/, $(SRCEXECUTOR)) \

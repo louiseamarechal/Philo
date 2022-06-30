@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/31 16:38:04 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/29 14:35:41 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/30 14:29:28 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,9 @@ typedef struct s_args {
 	int				number_must_eat;
 	int				died;
 	int				all_ate;
-	long long int	first_timestamp;
+	long long int	start_simu;
 	t_philosopher	philosophers[200];
-	pthread_mutex_t	print_philo_state;
-	pthread_mutex_t	meal_state;
+	pthread_mutex_t	global_block;
 	pthread_mutex_t	forks[200];
 }	t_args;
 
@@ -60,9 +59,12 @@ int				ft_atoi(const char *str);
 int				ft_strcmp(const char *s1, const char *s2);
 void			kill_everything(t_args *args);
 int				is_dead(t_args *args);
+int				is_full(t_args *args);
+void			death_condition(t_args *args, t_philosopher philosopher, int i);
+void			all_ate_checker(t_args *args, t_philosopher *philo);
 
 // timestamp
-long long int	timestamp(void);
+long long int	get_time(void);
 void			sleep_mode(t_args *args, long long time_to);
 void			print_state(t_args *args, int philo_id, char *state);
 // long long int	diff_time_in_msec(long long int t1, long long int t2);

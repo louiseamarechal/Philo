@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 08:43:37 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/28 16:42:33 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/30 15:01:55 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ static int	intitialize_mutex(t_args *args)
 			return (0);
 		i++;
 	}
-	if (pthread_mutex_init(&args->print_philo_state, NULL) != 0)
-		return (0);
-	if (pthread_mutex_init(&args->meal_state, NULL) != 0)
+	if (pthread_mutex_init(&args->global_block, NULL) != 0)
 		return (0);
 	return (1);
 }
@@ -40,7 +38,7 @@ static int	initialize_philo(t_args *args, t_philosopher *philo)
 		philo[i].id = i;
 		philo[i].left_fork = (i + 1) % args->nb_philo;
 		philo[i].right_fork = i;
-		philo[i].started_meal = args->first_timestamp;
+		philo[i].started_meal = args->start_simu;
 		philo[i].args = args;
 		i++;
 	}
@@ -59,9 +57,11 @@ int	initialize(t_args *args, char **argv, int argc)
 		args->number_must_eat = -1;
 	if (args->number_must_eat == 0)
 		return (0);
+	if (args->t_die < 0 || args->t_eat < 0 || args->t_sleep < 0)
+		return (0);
 	args->died = 0;
 	args->all_ate = 0;
-	args->first_timestamp = timestamp();
+	args->start_simu = get_time();
 	initialize_philo(args, args->philosophers);
 	intitialize_mutex(args);
 	return (1);

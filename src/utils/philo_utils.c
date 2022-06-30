@@ -6,16 +6,11 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 14:30:21 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/30 15:01:51 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/30 15:46:54 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher.h"
-
-// void	destroy_all(t_args args)
-// {
-//
-// }
 
 int	is_digit(char c)
 {
@@ -68,32 +63,6 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char)s1[cpt] - (unsigned char)s2[cpt]);
 }
 
-int	is_dead(t_args *args)
-{
-	int	ret;
-
-	pthread_mutex_lock(&args->global_block);
-	if (args->died != 1)
-		ret = 0;
-	else
-		ret = 1;
-	pthread_mutex_unlock(&args->global_block);
-	return (ret);
-}
-
-int	is_full(t_args *args)
-{
-	int	ret;
-
-	pthread_mutex_lock(&args->global_block);
-	if (args->all_ate != 1)
-		ret = 0;
-	else
-		ret = 1;
-	pthread_mutex_unlock(&args->global_block);
-	return (ret);
-}
-
 void	kill_everything(t_args *args)
 {
 	int	i;
@@ -105,32 +74,4 @@ void	kill_everything(t_args *args)
 		i++;
 	}
 	pthread_mutex_destroy(&args->global_block);
-}
-
-void	death_condition(t_args *args, t_philosopher philosopher, int i)
-{
-	pthread_mutex_lock(&args->global_block);
-	if ((get_time() - philosopher.started_meal) > args->t_die)
-	{
-		pthread_mutex_unlock(&args->global_block);
-		print_state(args, i, "\033[31mdied\033[0m");
-		pthread_mutex_lock(&args->global_block);
-		args->died = 1;
-	}
-	pthread_mutex_unlock(&args->global_block);
-}
-
-void	all_ate_checker(t_args *args, t_philosopher *philo)
-{
-	int	i;
-
-	i = 0;
-	pthread_mutex_lock(&args->global_block);
-	while (args->number_must_eat != -1 && i < args->nb_philo && philo[i].nb_meal >= args->number_must_eat)
-		i++;
-	pthread_mutex_unlock(&args->global_block);
-	pthread_mutex_lock(&args->global_block);
-	if (i == args->nb_philo)
-		args->all_ate = 1;
-	pthread_mutex_unlock(&args->global_block);
 }

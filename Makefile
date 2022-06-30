@@ -6,7 +6,7 @@
 #    By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/30 15:24:06 by lmarecha          #+#    #+#              #
-#    Updated: 2022/06/30 15:04:55 by lmarecha         ###   ########.fr        #
+#    Updated: 2022/06/30 15:47:26 by lmarecha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@
 NAME = philo
 
 CC = clang
-CFLAGS = -Wall -Werror -Wextra -pthread -g3 #-fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -pthread #-g3 -fsanitize=address
 INCLUDES = -I includes
 
 #------------------------------------#
@@ -33,7 +33,8 @@ SRCEXECUTOR	=	executor.c
 SRCPARSER	=	initializer.c
 
 SRCUTILS	=	philo_utils.c \
-				time_manager.c
+				time_manager.c \
+				mutex_utils.c
 
 SRC 		=	$(addprefix $(SRCDIR), $(SRCMAIN)) \
 				$(addprefix $(SRCDIR)executor/, $(SRCEXECUTOR)) \

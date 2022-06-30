@@ -6,7 +6,7 @@
 /*   By: lmarecha <lmarecha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 08:43:37 by lmarecha          #+#    #+#             */
-/*   Updated: 2022/06/30 15:01:55 by lmarecha         ###   ########.fr       */
+/*   Updated: 2022/06/30 16:12:21 by lmarecha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,11 @@ int	initialize(t_args *args, char **argv, int argc)
 	args->t_eat = ft_atoi(argv[3]);
 	args->t_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
+	{
 		args->number_must_eat = ft_atoi(argv[5]);
+		if (args->number_must_eat < 0)
+			return (0);
+	}
 	else
 		args->number_must_eat = -1;
 	if (args->number_must_eat == 0)
